@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Background circle with subtle shadow -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M54,54m-52,0a52,52 0,1 1,104 0a52,52 0,1 1,-104 0" />
+    
+    <!-- Inner circle for better definition -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54m-48,0a48,48 0,1 1,96 0a48,48 0,1 1,-96 0" />
+    
+    <!-- Main background circle -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M54,54m-44,0a44,44 0,1 1,88 0a44,44 0,1 1,-88 0" />
+    
+    <!-- Leaf shape - larger and more defined -->
+    <path
+        android:fillColor="#66CC00"
+        android:pathData="M54,28 Q72,24 88,36 Q84,48 72,56 Q66,62 54,56 Q42,48 40,36 Q46,28 54,28 Z" />
+    
+    <!-- Letter E - larger and clearer -->
+    <path
+        android:fillColor="#4F5B47"
+        android:pathData="M28,32 L28,76 L76,76 L76,68 L48,68 L48,58 L68,58 L68,50 L48,50 L48,32 Z" />
+    
+    <!-- Letter c - larger and clearer -->
+    <path
+        android:fillColor="#4F5B47"
+        android:pathData="M80,36 Q88,36 88,54 Q88,72 80,72 L80,54 Z" />
+    
+    <!-- Letter G - larger and clearer -->
+    <path
+        android:fillColor="#66CC00"
+        android:pathData="M32,80 L68,80 Q76,80 76,72 L68,72 L68,78 L32,78 Z" />
+    
+    <!-- Letter r - larger and clearer -->
+    <path
+        android:fillColor="#66CC00"
+        android:pathData="M38,80 L52,80 L52,84 L38,84 Z" />
+    
+    <!-- Letter i - larger and clearer -->
+    <path
+        android:fillColor="#66CC00"
+        android:pathData="M56,80 L70,80 L70,84 L56,84 Z" />
+    
+    <!-- Letter d - larger and clearer -->
+    <path
+        android:fillColor="#66CC00"
+        android:pathData="M74,80 L88,80 L88,84 L74,84 Z" />
+</vector>

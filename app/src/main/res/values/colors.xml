@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors (60%) - Main brand colors -->
+    <color name="primary_green">#2E7D32</color>
+    <color name="primary_dark_green">#1B5E20</color>
+    <color name="primary_light_green">#4CAF50</color>
+    
+    <!-- Secondary Colors (30%) - Supporting colors -->
+    <color name="secondary_teal">#00695C</color>
+    <color name="secondary_light_teal">#26A69A</color>
+    <color name="secondary_dark_teal">#004D40</color>
+    
+    <!-- Accent Colors (10%) - Highlights and calls-to-action -->
+    <color name="accent_yellow">#FFC107</color>
+    <color name="accent_orange">#FF9800</color>
+    <color name="accent_red">#F44336</color>
+    
+    <!-- Neutral Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="light_gray">#F5F5F5</color>
+    <color name="medium_gray">#9E9E9E</color>
+    <color name="dark_gray">#424242</color>
+    
+    <!-- Background Colors -->
+    <color name="background_light">#FAFAFA</color>
+    <color name="surface_white">#FFFFFF</color>
+    <color name="card_background">#FFFFFF</color>
+</resources>
