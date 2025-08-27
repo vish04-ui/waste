@@ -1,5 +1,6 @@
 package com.example.wastemanagement.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -8,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.rounded.Eco
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -34,26 +37,20 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_ecogrid_logo),
-                            contentDescription = "EcoGrid Logo",
-                            modifier = Modifier.size(32.dp),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Text("EcoGrid", fontWeight = FontWeight.Bold)
-                    }
+                title = {
+                    Image(
+                        painter = painterResource(id = R.drawable.ecogrid_wordmark),
+                        contentDescription = null,
+                        modifier = Modifier.height(100.dp),
+                        contentScale = androidx.compose.ui.layout.ContentScale.Fit
+                    )
                 },
                 actions = {
-                                        Row(
+                    Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         // Language toggle button
-                        Card(
+                        OutlinedCard(
                             onClick = { showLanguageSelector = true },
                             colors = CardDefaults.cardColors(
                                 containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
@@ -66,14 +63,14 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Info,
+                                    imageVector = Icons.Default.Language,
                                     contentDescription = "Language",
                                     tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(16.dp)
                                 )
                                 Text(
                                     text = currentLanguage.code.uppercase(),
-                                    fontSize = 10.sp,
+                                    style = MaterialTheme.typography.labelSmall,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.primary
                                 )
@@ -87,10 +84,11 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
                                 kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main).launch {
                                     themeManager.toggleTheme()
                                 }
-                            }
+                            },
+                            modifier = Modifier.sizeIn(minWidth = com.example.wastemanagement.ui.theme.Dimens.minTouchTarget, minHeight = com.example.wastemanagement.ui.theme.Dimens.minTouchTarget)
                         ) {
                             Icon(
-                                imageVector = if (isDarkMode) Icons.Default.Star else Icons.Default.Info,
+                                imageVector = if (isDarkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
                                 contentDescription = if (isDarkMode) "Switch to Light Mode" else "Switch to Dark Mode",
                                 tint = MaterialTheme.colorScheme.onPrimaryContainer
                             )
@@ -120,35 +118,43 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Welcome Card
-            Card(
+            ElevatedCard(
                 modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
+                colors = CardDefaults.elevatedCardColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer
                 )
             ) {
-                Column(
-                    modifier = Modifier.padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = "App Icon",
-                        modifier = Modifier.size(64.dp),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = languageManager.getLocalizedStringForLanguage(currentLanguage, "welcome_title"),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = languageManager.getLocalizedStringForLanguage(currentLanguage, "welcome_subtitle"),
-                        fontSize = 16.sp,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Eco,
+                            contentDescription = "App Icon",
+                            modifier = Modifier.size(56.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = languageManager.getLocalizedStringForLanguage(currentLanguage, "welcome_title"),
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = languageManager.getLocalizedStringForLanguage(currentLanguage, "welcome_subtitle"),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f),
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             }
             
@@ -157,20 +163,21 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
             // Quick Stats
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 StatCard(
                     icon = Icons.Default.CheckCircle,
                     title = languageManager.getLocalizedStringForLanguage(currentLanguage, "collections"),
                     value = "12",
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                 )
-                Spacer(modifier = Modifier.width(16.dp))
                 StatCard(
-                    icon = Icons.Default.Star,
+                    icon = Icons.Default.Autorenew,
                     title = languageManager.getLocalizedStringForLanguage(currentLanguage, "recycled"),
                     value = "85%",
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                 )
             }
             
@@ -181,11 +188,13 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.height(400.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp)
             ) {
                 item {
                     FeatureCard(
-                        icon = Icons.Default.Add,
+                        icon = Icons.Default.CalendarMonth,
                         title = languageManager.getLocalizedStringForLanguage(currentLanguage, "waste_collection"),
                         description = languageManager.getLocalizedStringForLanguage(currentLanguage, "waste_collection_desc"),
                         onClick = { navController.navigate("waste_collection") }
@@ -193,7 +202,7 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
                 }
                 item {
                     FeatureCard(
-                        icon = Icons.Default.Info,
+                        icon = Icons.Default.Autorenew,
                         title = languageManager.getLocalizedStringForLanguage(currentLanguage, "recycling_guide"),
                         description = languageManager.getLocalizedStringForLanguage(currentLanguage, "recycling_guide_desc"),
                         onClick = { navController.navigate("recycling_guide") }
@@ -209,7 +218,7 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
                 }
                 item {
                     FeatureCard(
-                        icon = Icons.Default.List,
+                        icon = Icons.Default.History,
                         title = languageManager.getLocalizedStringForLanguage(currentLanguage, "history"),
                         description = languageManager.getLocalizedStringForLanguage(currentLanguage, "history_desc"),
                         onClick = { /* TODO: Implement history */ }
@@ -227,32 +236,35 @@ fun StatCard(
     value: String,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(
+    ElevatedCard(
+        modifier = modifier
+            .heightIn(min = 112.dp),
+        colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(28.dp),
                 tint = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = value,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontWeight = FontWeight.Bold
             )
             Text(
                 text = title,
-                fontSize = 14.sp,
+                style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)
             )
         }
@@ -267,34 +279,36 @@ fun FeatureCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(
+    ElevatedCard(
         modifier = modifier,
         onClick = onClick,
-        colors = CardDefaults.cardColors(
+        colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier
+                .padding(20.dp)
+                .sizeIn(minHeight = com.example.wastemanagement.ui.theme.Dimens.minTouchTarget),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(28.dp),
                 tint = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = title,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = description,
-                fontSize = 12.sp,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )

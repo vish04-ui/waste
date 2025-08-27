@@ -50,6 +50,11 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.ui:ui-text-google-fonts")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    // Needed for Google Fonts provider certificates (com.google.android.gms.fonts.R)
+    implementation("com.google.android.gms:play-services-base:18.5.0")
     
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")

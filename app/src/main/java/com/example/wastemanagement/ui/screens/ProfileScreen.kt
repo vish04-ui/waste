@@ -19,13 +19,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wastemanagement.ui.theme.ThemeManager
 import com.example.wastemanagement.ui.localization.LanguageManager
+import com.example.wastemanagement.ui.auth.AuthManager
 import com.example.wastemanagement.ui.localization.LanguageSelector
 import com.example.wastemanagement.ui.localization.AppLanguage
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(navController: NavController, themeManager: ThemeManager, languageManager: LanguageManager) {
+fun ProfileScreen(navController: NavController, themeManager: ThemeManager, languageManager: LanguageManager, authManager: AuthManager) {
     var notificationsEnabled by remember { mutableStateOf(true) }
     var autoScheduleEnabled by remember { mutableStateOf(true) }
     var isVisible by remember { mutableStateOf(false) }
@@ -39,13 +40,14 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
     }
     
     Scaffold(
+        contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             TopAppBar(
                 title = { 
                     Text(
                         languageManager.getLocalizedString("profile"), 
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
                     ) 
                 },
                 navigationIcon = {
@@ -76,7 +78,7 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
             AnimatedVisibility(
                 visible = isVisible,
                 enter = slideInVertically(
-                    animationSpec = tween(600, easing = EaseOutBack)
+                    animationSpec = tween(600, easing = FastOutSlowInEasing)
                 ) + fadeIn(animationSpec = tween(600))
             ) {
                 Card(
@@ -141,7 +143,7 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
             AnimatedVisibility(
                 visible = isVisible,
                 enter = slideInHorizontally(
-                    animationSpec = tween(800, easing = EaseOutBack),
+                    animationSpec = tween(800, easing = FastOutSlowInEasing),
                     initialOffsetX = { -it }
                 ) + fadeIn(animationSpec = tween(800))
             ) {
@@ -159,7 +161,7 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
             AnimatedVisibility(
                 visible = isVisible,
                 enter = slideInHorizontally(
-                    animationSpec = tween(900, easing = EaseOutBack),
+                    animationSpec = tween(900, easing = FastOutSlowInEasing),
                     initialOffsetX = { -it }
                 ) + fadeIn(animationSpec = tween(900))
             ) {
@@ -185,7 +187,7 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
             AnimatedVisibility(
                 visible = isVisible,
                 enter = slideInHorizontally(
-                    animationSpec = tween(1000, easing = EaseOutBack),
+                    animationSpec = tween(1000, easing = FastOutSlowInEasing),
                     initialOffsetX = { -it }
                 ) + fadeIn(animationSpec = tween(1000))
             ) {
@@ -216,7 +218,7 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
             AnimatedVisibility(
                 visible = isVisible,
                 enter = slideInHorizontally(
-                    animationSpec = tween(1100, easing = EaseOutBack),
+                    animationSpec = tween(1100, easing = FastOutSlowInEasing),
                     initialOffsetX = { -it }
                 ) + fadeIn(animationSpec = tween(1100))
             ) {
@@ -242,7 +244,7 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
             AnimatedVisibility(
                 visible = isVisible,
                 enter = slideInHorizontally(
-                    animationSpec = tween(1200, easing = EaseOutBack),
+                    animationSpec = tween(1200, easing = FastOutSlowInEasing),
                     initialOffsetX = { -it }
                 ) + fadeIn(animationSpec = tween(1200))
             ) {
@@ -292,7 +294,7 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
             AnimatedVisibility(
                 visible = isVisible,
                 enter = slideInHorizontally(
-                    animationSpec = tween(1200, easing = EaseOutBack),
+                    animationSpec = tween(1200, easing = FastOutSlowInEasing),
                     initialOffsetX = { -it }
                 ) + fadeIn(animationSpec = tween(1200))
             ) {
@@ -318,7 +320,7 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInHorizontally(
-                        animationSpec = tween(1300 + (index * 100), easing = EaseOutBack),
+                        animationSpec = tween(1300 + (index * 100), easing = FastOutSlowInEasing),
                         initialOffsetX = { -it }
                     ) + fadeIn(animationSpec = tween(1300 + (index * 100)))
                 ) {
@@ -340,12 +342,19 @@ fun ProfileScreen(navController: NavController, themeManager: ThemeManager, lang
             AnimatedVisibility(
                 visible = isVisible,
                 enter = slideInVertically(
-                    animationSpec = tween(1500, easing = EaseOutBack),
+                    animationSpec = tween(1500, easing = FastOutSlowInEasing),
                     initialOffsetY = { it }
                 ) + fadeIn(animationSpec = tween(1500))
             ) {
                 Button(
-                    onClick = { /* TODO: Implement logout */ },
+                    onClick = { 
+                        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main).launch {
+                            authManager.logout()
+                            navController.navigate("login") {
+                                popUpTo(0) { inclusive = true }
+                            }
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.error

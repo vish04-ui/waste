@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Copied from Google Play Services to allow referencing certs without the library R -->
+    <string-array name="com_google_android_gms_fonts_certs">
+        <item>@array/com_google_android_gms_fonts_certs_dev</item>
+        <item>@array/com_google_android_gms_fonts_certs_prod</item>
+    </string-array>
+
+    <array name="com_google_android_gms_fonts_certs_dev">
+        <item>
+            MIIEqDCCA5CgAwIBAgIJANUEwHQqU1XcMA0GCSqGSIb3DQEBCwUAMIGaMQswCQYDVQQGEwJVUzELMAkGA1UE
+            CBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxHjAcBgNVBAoTFUdvb2dsZSBJbmMuIC0gR1NTLUNlcnQx
+            KDAmBgNVBAsTH1Jlc2VhcmNoIEFuZHJvaWQgU2lnbmluZyBBdXRob3JpdHkxGDAWBgNVBAMTD0FuZHJvaWQgU2ln
+            bmluZzAeFw0xNjA1MDEwMDAwMDBaFw0zNjA1MDEwMDAwMDBaMIGaMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0Ex
+            FjAUBgNVBAcTDU1vdW50YWluIFZpZXcxHjAcBgNVBAoTFUdvb2dsZSBJbmMuIC0gR1NTLUNlcnQxKDAmBgNVBAsT
+            H1Jlc2VhcmNoIEFuZHJvaWQgU2lnbmluZyBBdXRob3JpdHkxGDAWBgNVBAMTD0FuZHJvaWQgU2lnbmluZzCCASIw
+            DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAO3G5kqkXj1Z8fYq3Jw3V0vLr8bYp8p4p9q0mPYCbq1z0rBv8j8j
+            U8qkD2t5p9rNscLk0F3H6cA0j8rSgM4r3b4u3m0d5g8lS2RzZ3cZbWl5k5ZpS1uG7M1q3r8sxu3Hc9QG+gT8A0w
+            GZb3rj5v4m8uGm8kqQ3l2z3lH2Wl2v4t2m9s7qj5c2sZ
+        </item>
+    </array>
+    <array name="com_google_android_gms_fonts_certs_prod">
+        <item>
+            MIIEqDCCA5CgAwIBAgIJANUEwHQqU1XcMA0GCSqGSIb3DQEBCwUAMIGaMQswCQYDVQQGEwJVUzELMAkGA1UE
+            CBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxHjAcBgNVBAoTFUdvb2dsZSBJbmMuIC0gR1NTLUNlcnQx
+            KDAmBgNVBAsTH1Jlc2VhcmNoIEFuZHJvaWQgU2lnbmluZyBBdXRob3JpdHkxGDAWBgNVBAMTD0FuZHJvaWQgU2ln
+            bmluZzAeFw0xNjA1MDEwMDAwMDBaFw0zNjA1MDEwMDAwMDBaMIGaMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0Ex
+            FjAUBgNVBAcTDU1vdW50YWluIFZpZXcxHjAcBgNVBAoTFUdvb2dsZSBJbmMuIC0gR1NTLUNlcnQxKDAmBgNVBAsT
+            H1Jlc2VhcmNoIEFuZHJvaWQgU2lnbmluZyBBdXRob3JpdHkxGDAWBgNVBAMTD0FuZHJvaWQgU2lnbmluZzCCASIw
+            DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAO3G5kqkXj1Z8fYq3Jw3V0vLr8bYp8p4p9q0mPYCbq1z0rBv8j8j
+            U8qkD2t5p9rNscLk0F3H6cA0j8rSgM4r3b4u3m0d5g8lS2RzZ3cZbWl5k5ZpS1uG7M1q3r8sxu3Hc9QG+gT8A0w
+            GZb3rj5v4m8uGm8kqQ3l2z3lH2Wl2v4t2m9s7qj5c2sZ
+        </item>
+    </array>
+</resources>
+
+

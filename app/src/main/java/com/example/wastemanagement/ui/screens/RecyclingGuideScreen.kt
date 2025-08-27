@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wastemanagement.ui.localization.LanguageManager
+import androidx.compose.ui.res.stringResource
+import com.example.wastemanagement.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,13 +34,14 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
     }
     
     Scaffold(
+        contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             TopAppBar(
                 title = { 
                     Text(
-                        languageManager.getLocalizedString("recycling_guide_title"), 
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp
+                        stringResource(id = R.string.recycling_guide_title), 
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
                     ) 
                 },
                 navigationIcon = {
@@ -70,7 +73,7 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInVertically(
-                        animationSpec = tween(600, easing = EaseOutBack)
+                        animationSpec = tween(600, easing = FastOutSlowInEasing)
                     ) + fadeIn(animationSpec = tween(600))
                 ) {
                     Card(
@@ -85,14 +88,14 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Star,
+                                imageVector = Icons.Default.Eco,
                                 contentDescription = "Recycling Icon",
                                 modifier = Modifier.size(56.dp),
                                 tint = MaterialTheme.colorScheme.onSecondaryContainer
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(
-                                text = languageManager.getLocalizedStringForLanguage(currentLanguage, "recycling_header_title"),
+                                text = stringResource(id = R.string.recycling_header_title),
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -100,7 +103,7 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = languageManager.getLocalizedStringForLanguage(currentLanguage, "recycling_header_subtitle"),
+                                text = stringResource(id = R.string.recycling_header_subtitle),
                                 fontSize = 16.sp,
                                 color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f),
                                 textAlign = TextAlign.Center
@@ -115,7 +118,7 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInHorizontally(
-                        animationSpec = tween(800 + (index * 150), easing = EaseOutBack),
+                        animationSpec = tween(800 + (index * 150), easing = FastOutSlowInEasing),
                         initialOffsetX = { -it }
                     ) + fadeIn(animationSpec = tween(800 + (index * 150)))
                 ) {
@@ -136,12 +139,12 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInVertically(
-                        animationSpec = tween(1200, easing = EaseOutBack),
+                        animationSpec = tween(1200, easing = FastOutSlowInEasing),
                         initialOffsetY = { it }
                     ) + fadeIn(animationSpec = tween(1200))
                 ) {
                     Text(
-                        text = languageManager.getLocalizedStringForLanguage(currentLanguage, "quick_tips"),
+                        text = stringResource(id = R.string.quick_tips),
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -155,7 +158,7 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInHorizontally(
-                        animationSpec = tween(1400 + (index * 100), easing = EaseOutBack),
+                        animationSpec = tween(1400 + (index * 100), easing = FastOutSlowInEasing),
                         initialOffsetX = { it }
                     ) + fadeIn(animationSpec = tween(1400 + (index * 100)))
                 ) {
@@ -230,7 +233,7 @@ fun RecyclingCategoryCard(
             AnimatedVisibility(
                 visible = isExpanded,
                 enter = expandVertically(
-                    animationSpec = tween(300, easing = EaseOutBack)
+                    animationSpec = tween(300, easing = FastOutSlowInEasing)
                 ) + fadeIn(animationSpec = tween(300)),
                 exit = shrinkVertically(
                     animationSpec = tween(300, easing = EaseInBack)
@@ -361,7 +364,7 @@ fun getRecyclingCategories(languageManager: com.example.wastemanagement.ui.local
             id = "paper",
             name = languageManager.getLocalizedStringForLanguage(currentLanguage, "paper_cardboard"),
             description = languageManager.getLocalizedStringForLanguage(currentLanguage, "recyclable_paper_products"),
-            icon = Icons.Default.Star,
+            icon = Icons.Default.Description,
             items = listOf(
                 languageManager.getLocalizedStringForLanguage(currentLanguage, "item_newspapers_magazines"),
                 languageManager.getLocalizedStringForLanguage(currentLanguage, "item_cardboard_boxes"),
@@ -379,7 +382,7 @@ fun getRecyclingCategories(languageManager: com.example.wastemanagement.ui.local
             id = "plastic",
             name = languageManager.getLocalizedStringForLanguage(currentLanguage, "plastic"),
             description = languageManager.getLocalizedStringForLanguage(currentLanguage, "plastic_desc"),
-            icon = Icons.Default.Star,
+            icon = Icons.Default.Science,
             items = listOf(
                 languageManager.getLocalizedStringForLanguage(currentLanguage, "item_water_bottles"),
                 languageManager.getLocalizedStringForLanguage(currentLanguage, "item_milk_jugs"),
@@ -397,7 +400,7 @@ fun getRecyclingCategories(languageManager: com.example.wastemanagement.ui.local
             id = "glass",
             name = languageManager.getLocalizedStringForLanguage(currentLanguage, "glass"),
             description = languageManager.getLocalizedStringForLanguage(currentLanguage, "glass_desc"),
-            icon = Icons.Default.Star,
+            icon = Icons.Default.WineBar,
             items = listOf(
                 languageManager.getLocalizedStringForLanguage(currentLanguage, "item_beverage_bottles"),
                 languageManager.getLocalizedStringForLanguage(currentLanguage, "item_food_jars"),
@@ -414,7 +417,7 @@ fun getRecyclingCategories(languageManager: com.example.wastemanagement.ui.local
             id = "metal",
             name = languageManager.getLocalizedStringForLanguage(currentLanguage, "metal"),
             description = languageManager.getLocalizedStringForLanguage(currentLanguage, "metal_desc"),
-            icon = Icons.Default.Star,
+            icon = Icons.Default.Build,
             items = listOf(
                 languageManager.getLocalizedStringForLanguage(currentLanguage, "item_aluminum_cans"),
                 languageManager.getLocalizedStringForLanguage(currentLanguage, "item_steel_food_cans"),

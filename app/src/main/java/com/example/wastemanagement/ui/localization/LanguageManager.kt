@@ -1,6 +1,8 @@
 package com.example.wastemanagement.ui.localization
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -40,6 +42,15 @@ class LanguageManager(private val context: Context) {
         context.languageDataStore.edit { preferences ->
             preferences[SELECTED_LANGUAGE] = language.code
         }
+        applyLanguage(language)
+    }
+    
+    fun applyLanguage(language: AppLanguage) {
+        val desired = LocaleListCompat.forLanguageTags(language.code)
+        val current = AppCompatDelegate.getApplicationLocales()
+        if (current.toLanguageTags() != desired.toLanguageTags()) {
+            AppCompatDelegate.setApplicationLocales(desired)
+        }
     }
     
     // Get localized string based on current language
@@ -63,6 +74,25 @@ class LanguageManager(private val context: Context) {
             "recycling" -> "Recycling"
             "profile" -> "Profile"
             "settings" -> "Settings"
+            // Auth & Onboarding
+            "get_started" -> "Get Started"
+            "next" -> "Next"
+            "skip" -> "Skip"
+            "finish" -> "Finish"
+            "onboarding_title_1" -> "Track Your Waste"
+            "onboarding_desc_1" -> "Log and monitor your waste collections with ease."
+            "onboarding_title_2" -> "Recycle Smarter"
+            "onboarding_desc_2" -> "Learn best practices to recycle properly."
+            "onboarding_title_3" -> "Make an Impact"
+            "onboarding_desc_3" -> "Join EcoGrid to keep your community cleaner."
+            "email" -> "Email"
+            "password" -> "Password"
+            "name" -> "Name"
+            "login" -> "Login"
+            "signup" -> "Sign Up"
+            "dont_have_account" -> "Don't have an account?"
+            "have_account" -> "Already have an account?"
+            "continue" -> "Continue"
             "welcome_title" -> "Welcome to EcoGrid"
             "welcome_subtitle" -> "Let's make the world cleaner together"
             "collections" -> "Collections"
@@ -168,6 +198,25 @@ class LanguageManager(private val context: Context) {
             "recycling" -> "Recycling"
             "profile" -> "Profile"
             "settings" -> "அமைப்புகள்"
+            // Auth & Onboarding (fallbacks/mixed localized)
+            "get_started" -> "ආරම්භ කරන්න"
+            "next" -> "ඊළඟ"
+            "skip" -> "මඟ හරින්න"
+            "finish" -> "අවසන්"
+            "onboarding_title_1" -> "ඔබගේ අපද්‍රව්ය අධීක්ෂණය කරන්න"
+            "onboarding_desc_1" -> "එළෙසම සටහන් තබා ගන්න."
+            "onboarding_title_2" -> "සුදානම්ව නැවුම් පරිවර්තනය"
+            "onboarding_desc_2" -> "නිවැරදිව නැවත පාවිච්චි කරන්නේ කෙසේද කියා ඉගෙන ගන්න."
+            "onboarding_title_3" -> "ආසන්න පරිසරයට බලපෑමක් කරන්න"
+            "onboarding_desc_3" -> "EcoGrid එක්වෙමින් ඔබේ ප්‍රජාව පිරිසිදු කරමු."
+            "email" -> "Email"
+            "password" -> "Password"
+            "name" -> "නම"
+            "login" -> "Login"
+            "signup" -> "Sign Up"
+            "dont_have_account" -> "ගිණුමක් නැද්ද?"
+            "have_account" -> "දැනටමත් ගිණුමක් තිබේද?"
+            "continue" -> "Continue"
             "welcome_title" -> "Welcome to EcoGrid"
             "welcome_subtitle" -> "ලෝකය පිරිසිදු කරමු"
             "collections" -> "Collections"
@@ -273,6 +322,25 @@ class LanguageManager(private val context: Context) {
             "recycling" -> "Recycling"
             "profile" -> "Profile"
             "settings" -> "Settings"
+            // Auth & Onboarding
+            "get_started" -> "தொடங்கவும்"
+            "next" -> "அடுத்து"
+            "skip" -> "தவிர்க்கவும்"
+            "finish" -> "முடிக்க"
+            "onboarding_title_1" -> "உங்கள் கழிவை கண்காணிக்கவும்"
+            "onboarding_desc_1" -> "சுலபமாக சேகரிப்புகளை பதிவு செய்யுங்கள்."
+            "onboarding_title_2" -> "சிறந்த முறையில் மறுசுழற்சி"
+            "onboarding_desc_2" -> "சரியாக மறுசுழற்சி செய்வதை கற்றுக்கொள்ளுங்கள்."
+            "onboarding_title_3" -> "ஒரு நல்ல தாக்கம் உண்டாக்குங்கள்"
+            "onboarding_desc_3" -> "EcoGrid-இல் சேர்ந்து உங்கள் சமூகத்தை சுத்தமாக வைத்திருக்கவும்."
+            "email" -> "Email"
+            "password" -> "Password"
+            "name" -> "பெயர்"
+            "login" -> "Login"
+            "signup" -> "Sign Up"
+            "dont_have_account" -> "கணக்கு இல்லையா?"
+            "have_account" -> "ஏற்கனவே கணக்கு உள்ளதா?"
+            "continue" -> "Continue"
             "welcome_title" -> "Welcome to EcoGrid"
             "welcome_subtitle" -> "உலகத்தை சுத்தமாக்குவோம்"
             "collections" -> "Collections"

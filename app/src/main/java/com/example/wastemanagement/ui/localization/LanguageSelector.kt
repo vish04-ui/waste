@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
+import com.example.wastemanagement.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +40,7 @@ fun LanguageSelector(
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = languageManager.getLocalizedString("select_language"),
+                    text = stringResource(id = R.string.select_language),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
@@ -66,7 +68,7 @@ fun LanguageSelector(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text(languageManager.getLocalizedString("cancel_button"))
+                Text(stringResource(id = R.string.cancel_button))
             }
         }
     )

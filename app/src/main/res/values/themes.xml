@@ -5,6 +5,9 @@
         <!-- Customize your theme here. -->
     </style>
     
+    <!-- Google Fonts provider certificates are referenced from
+         com.google.android.gms: they should not be copied locally. -->
+    
     <!-- Splash screen theme -->
     <style name="Theme.EcoGrid.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>

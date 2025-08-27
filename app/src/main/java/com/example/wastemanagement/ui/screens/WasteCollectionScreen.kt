@@ -20,6 +20,8 @@ import androidx.navigation.NavController
 import com.example.wastemanagement.ui.localization.LanguageManager
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import androidx.compose.ui.res.stringResource
+import com.example.wastemanagement.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,11 +33,11 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
     
     val currentLanguage by languageManager.currentLanguage.collectAsState(initial = com.example.wastemanagement.ui.localization.AppLanguage.ENGLISH)
     val wasteTypes = listOf(
-        languageManager.getLocalizedString("waste_type_general"),
-        languageManager.getLocalizedString("waste_type_recyclables"),
-        languageManager.getLocalizedString("waste_type_organic"),
-        languageManager.getLocalizedString("waste_type_hazardous"),
-        languageManager.getLocalizedString("waste_type_electronics")
+        stringResource(id = R.string.waste_type_general),
+        stringResource(id = R.string.waste_type_recyclables),
+        stringResource(id = R.string.waste_type_organic),
+        stringResource(id = R.string.waste_type_hazardous),
+        stringResource(id = R.string.waste_type_electronics)
     )
     
     LaunchedEffect(Unit) {
@@ -43,13 +45,14 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
     }
     
     Scaffold(
+        contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             TopAppBar(
                 title = { 
                     Text(
-                        languageManager.getLocalizedString("waste_collection_title"), 
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp
+                        stringResource(id = R.string.waste_collection_title), 
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
                     ) 
                 },
                 navigationIcon = {
@@ -90,7 +93,7 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInVertically(
-                        animationSpec = tween(600, easing = EaseOutBack)
+                        animationSpec = tween(600, easing = FastOutSlowInEasing)
                     ) + fadeIn(animationSpec = tween(600))
                 ) {
                     Card(
@@ -114,7 +117,7 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                                 )
                                 Spacer(modifier = Modifier.width(12.dp))
                                 Text(
-                                    text = languageManager.getLocalizedStringForLanguage(currentLanguage, "collection_overview_title"),
+                                    text = stringResource(id = R.string.collection_overview_title),
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -122,7 +125,7 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                             }
                             Spacer(modifier = Modifier.height(12.dp))
                             Text(
-                                text = languageManager.getLocalizedStringForLanguage(currentLanguage, "collection_overview_desc"),
+                                text = stringResource(id = R.string.collection_overview_desc),
                                 fontSize = 14.sp,
                                 color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
                             )
@@ -136,12 +139,12 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInHorizontally(
-                        animationSpec = tween(800, easing = EaseOutBack),
+                        animationSpec = tween(800, easing = FastOutSlowInEasing),
                         initialOffsetX = { -it }
                     ) + fadeIn(animationSpec = tween(800))
                 ) {
                     Text(
-                        text = languageManager.getLocalizedStringForLanguage(currentLanguage, "upcoming_collections"),
+                        text = stringResource(id = R.string.upcoming_collections),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -155,7 +158,7 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInHorizontally(
-                        animationSpec = tween(800 + (index * 100), easing = EaseOutBack),
+                        animationSpec = tween(800 + (index * 100), easing = FastOutSlowInEasing),
                         initialOffsetX = { -it }
                     ) + fadeIn(animationSpec = tween(800 + (index * 100)))
                 ) {
@@ -168,12 +171,12 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInHorizontally(
-                        animationSpec = tween(1000, easing = EaseOutBack),
+                        animationSpec = tween(1000, easing = FastOutSlowInEasing),
                         initialOffsetX = { -it }
                     ) + fadeIn(animationSpec = tween(1000))
                 ) {
                     Text(
-                        text = languageManager.getLocalizedStringForLanguage(currentLanguage, "recent_collections"),
+                        text = stringResource(id = R.string.recent_collections),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -186,7 +189,7 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                 AnimatedVisibility(
                     visible = isVisible,
                     enter = slideInHorizontally(
-                        animationSpec = tween(1000 + (index * 100), easing = EaseOutBack),
+                        animationSpec = tween(1000 + (index * 100), easing = FastOutSlowInEasing),
                         initialOffsetX = { -it }
                     ) + fadeIn(animationSpec = tween(1000 + (index * 100)))
                 ) {
@@ -238,10 +241,10 @@ fun CollectionCard(
             Icon(
                 imageVector = when (collection.wasteType) {
                     "General Waste" -> Icons.Default.Delete
-                    "Recyclables" -> Icons.Default.Star
-                    "Organic" -> Icons.Default.Star
-                                            "Hazardous" -> Icons.Default.Star
-                                            "Electronics" -> Icons.Default.Star
+                    "Recyclables" -> Icons.Default.Autorenew
+                    "Organic" -> Icons.Default.Eco
+                    "Hazardous" -> Icons.Default.Warning
+                    "Electronics" -> Icons.Default.Memory
                     else -> Icons.Default.Delete
                 },
                 contentDescription = null,
@@ -317,7 +320,7 @@ fun ScheduleCollectionDialog(
         onDismissRequest = onDismiss,
         title = { 
             Text(
-                languageManager.getLocalizedStringForLanguage(currentLanguage, "schedule_collection_title"),
+                stringResource(id = R.string.schedule_collection_title),
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             ) 
@@ -325,7 +328,7 @@ fun ScheduleCollectionDialog(
         text = {
             Column {
                 Text(
-                    text = languageManager.getLocalizedStringForLanguage(currentLanguage, "select_date"),
+                    text = stringResource(id = R.string.select_date),
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 12.dp)
                 )
@@ -368,7 +371,7 @@ fun ScheduleCollectionDialog(
                 Spacer(modifier = Modifier.height(20.dp))
                 
                 Text(
-                    text = languageManager.getLocalizedStringForLanguage(currentLanguage, "waste_type"),
+                    text = stringResource(id = R.string.waste_type),
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 12.dp)
                 )
@@ -417,12 +420,12 @@ fun ScheduleCollectionDialog(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text(languageManager.getLocalizedStringForLanguage(currentLanguage, "schedule_button"), fontWeight = FontWeight.Bold)
+                Text(stringResource(id = R.string.schedule_button), fontWeight = FontWeight.Bold)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(languageManager.getLocalizedStringForLanguage(currentLanguage, "cancel_button"))
+                Text(stringResource(id = R.string.cancel_button))
             }
         }
     )
