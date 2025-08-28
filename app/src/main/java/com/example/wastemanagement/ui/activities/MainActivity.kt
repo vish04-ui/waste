@@ -26,6 +26,7 @@ class MainActivity: AppCompatActivity() {
     private lateinit var labelRecycling: TextView
     private lateinit var labelProfile: TextView
     private var currentTag: String = ""
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

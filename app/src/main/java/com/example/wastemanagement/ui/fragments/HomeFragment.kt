@@ -15,16 +15,27 @@ import com.example.wastemanagement.ui.fragments.dashboard.FeatureGridAdapter
 import com.example.wastemanagement.ui.fragments.dashboard.FeatureItem
 import com.example.wastemanagement.ui.localization.LanguageManager
 import com.example.wastemanagement.ui.localization.AppLanguage
+import com.example.wastemanagement.ui.theme.ThemeManager
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.button.MaterialButton
+import androidx.appcompat.app.AlertDialog
 
 class HomeFragment : Fragment() {
     private lateinit var languageManager: LanguageManager
+    private lateinit var themeManager: ThemeManager
+    private lateinit var languageCard: MaterialCardView
+    private lateinit var themeToggleButton: MaterialButton
+    private lateinit var languageCodeText: TextView
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         languageManager = LanguageManager(requireContext())
+        themeManager = ThemeManager(requireContext())
     }
+    
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_home, container, false)
         setupToolbar(v)
@@ -35,12 +46,71 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupToolbar(root: View) {
-        val toolbar = root.findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
-        // Add logo & language/theme placeholders
-        toolbar.title = "" // We show only logo
-        val logo = ImageView(requireContext()).apply { setImageResource(R.drawable.ecogrid_wordmark); adjustViewBounds = true; layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT) }
-        toolbar.addView(logo)
+        languageCard = root.findViewById(R.id.languageCard)
+        themeToggleButton = root.findViewById(R.id.themeToggleButton)
+        languageCodeText = root.findViewById(R.id.languageCode)
+        
+        // Set up language selector
+        languageCard.setOnClickListener {
+            showLanguageSelector()
+        }
+        
+        // Set up theme toggle
+        themeToggleButton.setOnClickListener {
+            lifecycleScope.launch {
+                themeManager.toggleTheme()
+                // Recreate activity to apply theme change
+                requireActivity().recreate()
+            }
+        }
+        
+        // Observe language changes
+        lifecycleScope.launch {
+            languageManager.currentLanguage.collectLatest { language ->
+                languageCodeText.text = language.code.uppercase()
+            }
+        }
+        
+        // Observe theme changes
+        lifecycleScope.launch {
+            themeManager.isDarkMode.collectLatest { isDark ->
+                val iconRes = if (isDark) R.drawable.ic_light_mode else R.drawable.ic_dark_mode
+                themeToggleButton.setIconResource(iconRes)
+            }
+        }
     }
+    
+    private fun showLanguageSelector() {
+        val languages = AppLanguage.values()
+        val languageNames = languages.map { lang ->
+            when (lang) {
+                AppLanguage.ENGLISH -> "English"
+                AppLanguage.SINHALA -> "සිංහල (Sinhala)"
+                AppLanguage.TAMIL -> "தமிழ் (Tamil)"
+            }
+        }.toTypedArray()
+        
+        var currentLanguage: AppLanguage = AppLanguage.ENGLISH
+        lifecycleScope.launch {
+            languageManager.currentLanguage.collectLatest { lang ->
+                currentLanguage = lang
+            }
+        }
+        
+        val currentIndex = languages.indexOf(currentLanguage)
+        
+        AlertDialog.Builder(requireContext())
+            .setTitle("Select Language")
+            .setSingleChoiceItems(languageNames, currentIndex) { dialog, which ->
+                lifecycleScope.launch {
+                    languageManager.setLanguage(languages[which])
+                }
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+    
     private fun setupWelcome(root: View) {
         val title = root.findViewById<TextView>(R.id.welcomeTitle)
         val subtitle = root.findViewById<TextView>(R.id.welcomeSubtitle)

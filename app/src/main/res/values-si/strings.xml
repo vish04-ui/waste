@@ -5,6 +5,8 @@
     <string name="collection">එක්රැස් කිරීම</string>
     <string name="recycling">ප්‍රතිචක්‍රීකරණය</string>
     <string name="profile">පැතිකඩ</string>
+    <string name="welcome_title">EcoGrid වෙත ඔබව පිළිගන්නවා</string>
+    <string name="welcome_subtitle">ඔබේ පුද්ගලික අපද්‍රව්ය කළමනාකරණ සහකරු</string>
     
     <string name="get_started">ආරම්භ කරන්න</string>
     <string name="next">ඊළඟ</string>

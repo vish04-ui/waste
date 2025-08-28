@@ -11,7 +11,85 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface"
         app:title=""
-        app:contentInsetStartWithNavigation="0dp"/>
+        app:contentInsetStartWithNavigation="0dp">
+        
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="120dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ecogrid_wordmark"
+            android:layout_gravity="start"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart"
+            android:layout_marginStart="16dp" />
+        
+        <!-- Right side buttons container -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            
+            <!-- Language Switch Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/languageCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="false"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:backgroundTint="?attr/colorPrimaryContainer">
+                
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:gravity="center_vertical">
+                    
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_language"
+                        app:tint="?attr/colorPrimary"
+                        android:layout_marginEnd="4dp" />
+                    
+                    <TextView
+                        android:id="@+id/languageCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EN"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorPrimary" />
+                        
+                </LinearLayout>
+                
+            </com.google.android.material.card.MaterialCardView>
+            
+            <!-- Dark Mode Toggle Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/themeToggleButton"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="?attr/colorPrimaryContainer"
+                app:icon="@drawable/ic_autorenew"
+                app:iconTint="?attr/colorOnPrimaryContainer"
+                app:iconSize="20dp"
+                android:clickable="true"
+                android:focusable="true" />
+                
+        </LinearLayout>
+        
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

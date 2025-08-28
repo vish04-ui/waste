@@ -12,6 +12,8 @@
     <!-- Dashboard Screen -->
     <string name="dashboard_welcome">Welcome to EcoGrid</string>
     <string name="dashboard_subtitle">Your personal waste management companion</string>
+    <string name="welcome_title">Welcome to EcoGrid</string>
+    <string name="welcome_subtitle">Your personal waste management companion</string>
     <string name="dashboard_stats_title">Your Eco Stats</string>
     <string name="dashboard_collections">Collections</string>
     <string name="dashboard_recycled">Recycled</string>
