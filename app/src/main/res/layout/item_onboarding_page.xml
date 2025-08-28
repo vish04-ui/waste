@@ -1,39 +1,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp">
 
+    <!-- Main illustration image -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="280dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="32dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+        
+        <ImageView
+            android:id="@+id/imageOnboarding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/onboarding1" />
+            
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Icon container - smaller and below the main image -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="?attr/colorPrimary">
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="?attr/colorPrimary"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp">
+        
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="88dp"
-            android:layout_height="88dp"
-            android:padding="24dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:padding="16dp"
             android:src="@drawable/ic_check_circle"
             android:tint="?attr/colorOnPrimary" />
+            
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Title with larger, bolder text -->
     <TextView
         android:id="@+id/textTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="32sp"
         android:textStyle="bold"
-        android:layout_marginBottom="12dp" />
+        android:fontFamily="sans-serif-medium"
+        android:textColor="?attr/colorOnSurface"
+        android:layout_marginBottom="16dp"
+        android:lineSpacingMultiplier="1.2" />
 
+    <!-- Description with better typography -->
     <TextView
         android:id="@+id/textDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="16sp"
-        android:textColor="?attr/colorOnSurfaceVariant" />
+        android:textSize="18sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:lineSpacingMultiplier="1.4"
+        android:fontFamily="sans-serif"
+        android:layout_marginHorizontal="24dp" />
 
 </LinearLayout>

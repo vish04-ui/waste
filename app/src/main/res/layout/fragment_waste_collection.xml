@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            >
 
             <TextView
                 android:id="@+id/titleText"
@@ -24,6 +24,8 @@
                 android:text="@string/waste_collection_title"
                 android:textStyle="bold"
                 android:textSize="28sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:textColor="@color/primary_green"
                 android:layout_marginBottom="24dp" />
 

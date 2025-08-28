@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        >
 
         <TextView
             android:id="@+id/titleText"
@@ -20,7 +20,9 @@
             android:textStyle="bold"
             android:textSize="28sp"
             android:textColor="@color/primary_green"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

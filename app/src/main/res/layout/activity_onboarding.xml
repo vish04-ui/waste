@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="0dp"
+    android:background="@drawable/onboarding_background">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/onboardingPager"
@@ -12,43 +13,103 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingBottom="8dp" />
+        android:paddingBottom="16dp" />
 
-    <LinearLayout
+    <!-- Modern bottom navigation area -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        >
-        <TextView
-            android:id="@+id/pageIndicator"
-            android:layout_width="wrap_content"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="?attr/colorSurface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1/3"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="14sp"/>
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSkip"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/skip"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonNext"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/next"
-            app:icon="@drawable/ic_arrow_forward"
-            app:iconPadding="8dp"
-            app:iconGravity="textStart"
-            />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="24dp">
+            
+            <!-- Page indicators -->
+            <LinearLayout
+                android:id="@+id/pageIndicators"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+                
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/page_indicator_active" />
+                    
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/page_indicator_inactive" />
+                    
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/page_indicator_inactive" />
+                    
+            </LinearLayout>
+            
+            <!-- Navigation buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                
+                <TextView
+                    android:id="@+id/pageIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1/3"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:visibility="gone"/>
+                    
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonSkip"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/skip"
+                    android:textSize="16sp" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonNext"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/next"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium"
+                    app:icon="@drawable/ic_arrow_forward"
+                    app:iconPadding="8dp"
+                    app:iconGravity="textEnd"
+                    app:cornerRadius="24dp" />
+                    
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+    </com.google.android.material.card.MaterialCardView>
+    
 </LinearLayout>
