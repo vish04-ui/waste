@@ -117,6 +117,91 @@ fun OnboardingScreen(
     }
 }
 
+// Wrapper for activity-based flow (no NavController). Reuses core UI logic via callback.
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@Composable
+fun OnboardingScreenStandalone(
+    languageManager: LanguageManager,
+    authManager: AuthManager,
+    onFinished: () -> Unit
+) {
+    val pages = listOf(
+        Pair(
+            stringResource(id = com.example.wastemanagement.R.string.onboarding_title_1),
+            stringResource(id = com.example.wastemanagement.R.string.onboarding_desc_1)
+        ),
+        Pair(
+            stringResource(id = com.example.wastemanagement.R.string.onboarding_title_2),
+            stringResource(id = com.example.wastemanagement.R.string.onboarding_desc_2)
+        ),
+        Pair(
+            stringResource(id = com.example.wastemanagement.R.string.onboarding_title_3),
+            stringResource(id = com.example.wastemanagement.R.string.onboarding_desc_3)
+        )
+    )
+    val pagerState = rememberPagerState(pageCount = { pages.size })
+    val scope = rememberCoroutineScope()
+    Scaffold(contentWindowInsets = WindowInsets.safeDrawing, bottomBar = {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextButton(onClick = {
+                scope.launch {
+                    authManager.setOnboardingCompleted(true)
+                    onFinished()
+                }
+            }) {
+                Text(stringResource(id = com.example.wastemanagement.R.string.skip))
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "${pagerState.currentPage + 1}/${pages.size}",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Button(onClick = {
+                    scope.launch {
+                        if (pagerState.currentPage < pages.lastIndex) {
+                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        } else {
+                            authManager.setOnboardingCompleted(true)
+                            onFinished()
+                        }
+                    }
+                }, modifier = Modifier.heightIn(min = com.example.wastemanagement.ui.theme.Dimens.minTouchTarget)) {
+                    Icon(Icons.Default.ArrowForward, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = if (pagerState.currentPage < pages.lastIndex)
+                            stringResource(id = com.example.wastemanagement.R.string.next)
+                        else stringResource(id = com.example.wastemanagement.R.string.finish),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+            }
+        }
+    }) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            HorizontalPager(state = pagerState, modifier = Modifier.weight(1f)) { page ->
+                OnboardingPage(
+                    title = pages[page].first,
+                    description = pages[page].second,
+                )
+            }
+        }
+    }
+}
+
 @Composable
 private fun OnboardingPage(
     title: String,

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -46,31 +47,6 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
     
     Scaffold(
         contentWindowInsets = WindowInsets.safeDrawing,
-        topBar = {
-            TopAppBar(
-                title = { 
-                    Text(
-                        stringResource(id = R.string.waste_collection_title), 
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
-                    ) 
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ),
-                actions = {
-                    IconButton(onClick = { /* TODO: Filter */ }) {
-                        Icon(Icons.Default.Settings, contentDescription = "Filter")
-                    }
-                }
-            )
-        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { showScheduleDialog = true },
@@ -85,9 +61,20 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            contentPadding = PaddingValues(bottom = 32.dp)
         ) {
+            // Title Section
+            item {
+                Text(
+                    text = stringResource(id = R.string.waste_collection_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
             // Header Section
             item {
                 AnimatedVisibility(
@@ -101,10 +88,11 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer
                         ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                        shape = RoundedCornerShape(20.dp)
                     ) {
                         Column(
-                            modifier = Modifier.padding(20.dp)
+                            modifier = Modifier.padding(24.dp)
                         ) {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
@@ -112,21 +100,22 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                                 Icon(
                                     Icons.Default.Info,
                                     contentDescription = null,
-                                    modifier = Modifier.size(32.dp),
+                                    modifier = Modifier.size(36.dp),
                                     tint = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
-                                Spacer(modifier = Modifier.width(12.dp))
+                                Spacer(modifier = Modifier.width(16.dp))
                                 Text(
                                     text = stringResource(id = R.string.collection_overview_title),
-                                    fontSize = 20.sp,
+                                    fontSize = 22.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                             }
-                            Spacer(modifier = Modifier.height(12.dp))
+                            Spacer(modifier = Modifier.height(16.dp))
                             Text(
                                 text = stringResource(id = R.string.collection_overview_desc),
-                                fontSize = 14.sp,
+                                fontSize = 16.sp,
+                                lineHeight = 22.sp,
                                 color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
                             )
                         }
@@ -145,10 +134,10 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                 ) {
                     Text(
                         text = stringResource(id = R.string.upcoming_collections),
-                        fontSize = 20.sp,
+                        fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)
+                        modifier = Modifier.padding(start = 8.dp, top = 12.dp, bottom = 16.dp)
                     )
                 }
             }
@@ -177,10 +166,10 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
                 ) {
                     Text(
                         text = stringResource(id = R.string.recent_collections),
-                        fontSize = 20.sp,
+                        fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(top = 24.dp, bottom = 12.dp)
+                        modifier = Modifier.padding(start = 8.dp, top = 28.dp, bottom = 16.dp)
                     )
                 }
             }
@@ -218,6 +207,40 @@ fun WasteCollectionScreen(navController: NavController, languageManager: Languag
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WasteCollectionScreenStandalone(languageManager: LanguageManager) {
+    var showScheduleDialog by remember { mutableStateOf(false) }
+    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+    var selectedWasteType by remember { mutableStateOf("") }
+    var isVisible by remember { mutableStateOf(false) }
+    val currentLanguage by languageManager.currentLanguage.collectAsState(initial = com.example.wastemanagement.ui.localization.AppLanguage.ENGLISH)
+    val wasteTypes = listOf(
+        stringResource(id = R.string.waste_type_general),
+        stringResource(id = R.string.waste_type_recyclables),
+        stringResource(id = R.string.waste_type_organic),
+        stringResource(id = R.string.waste_type_hazardous),
+        stringResource(id = R.string.waste_type_electronics)
+    )
+    LaunchedEffect(Unit) { isVisible = true }
+    Scaffold(contentWindowInsets = WindowInsets.safeDrawing, topBar = {
+        TopAppBar(title = { Text(stringResource(id = R.string.waste_collection_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold) }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer, titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer))
+    }, floatingActionButton = {
+        FloatingActionButton(onClick = { showScheduleDialog = true }, containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary) { Icon(Icons.Default.Add, contentDescription = null) }
+    }) { padding ->
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(padding).padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            item { AnimatedVisibility(visible = isVisible, enter = slideInVertically(animationSpec = tween(600, easing = FastOutSlowInEasing)) + fadeIn(animationSpec = tween(600))) { Card(modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer), elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)) { Column(modifier = Modifier.padding(20.dp)) { Row(verticalAlignment = Alignment.CenterVertically) { Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(32.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer); Spacer(modifier = Modifier.width(12.dp)); Text(text = stringResource(id = R.string.collection_overview_title), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondaryContainer) }; Spacer(modifier = Modifier.height(12.dp)); Text(text = stringResource(id = R.string.collection_overview_desc), fontSize = 14.sp, color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)) } } } }
+            item { AnimatedVisibility(visible = isVisible, enter = slideInHorizontally(animationSpec = tween(800, easing = FastOutSlowInEasing), initialOffsetX = { -it }) + fadeIn(animationSpec = tween(800))) { Text(text = stringResource(id = R.string.upcoming_collections), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)) } }
+            itemsIndexed(getSampleCollections()) { index, collection -> AnimatedVisibility(visible = isVisible, enter = slideInHorizontally(animationSpec = tween(800 + (index * 100), easing = FastOutSlowInEasing), initialOffsetX = { -it }) + fadeIn(animationSpec = tween(800 + (index * 100)))) { CollectionCard(collection = collection) } }
+            item { AnimatedVisibility(visible = isVisible, enter = slideInHorizontally(animationSpec = tween(1000, easing = FastOutSlowInEasing), initialOffsetX = { -it }) + fadeIn(animationSpec = tween(1000))) { Text(text = stringResource(id = R.string.recent_collections), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(top = 24.dp, bottom = 12.dp)) } }
+            itemsIndexed(getSampleRecentCollections()) { index, collection -> AnimatedVisibility(visible = isVisible, enter = slideInHorizontally(animationSpec = tween(1000 + (index * 100), easing = FastOutSlowInEasing), initialOffsetX = { -it }) + fadeIn(animationSpec = tween(1000 + (index * 100)))) { CollectionCard(collection = collection, isCompleted = true) } }
+        }
+        if (showScheduleDialog) {
+            ScheduleCollectionDialog(onDismiss = { showScheduleDialog = false }, onSchedule = { _, _ -> showScheduleDialog = false }, selectedDate = selectedDate, onDateSelected = { selectedDate = it }, selectedWasteType = selectedWasteType, onWasteTypeSelected = { selectedWasteType = it }, wasteTypes = wasteTypes, languageManager = languageManager, currentLanguage = currentLanguage)
+        }
+    }
+}
+
 @Composable
 fun CollectionCard(
     collection: CollectionItem,
@@ -232,10 +255,11 @@ fun CollectionCard(
             else 
                 MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        shape = RoundedCornerShape(18.dp)
     ) {
         Row(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(24.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -248,7 +272,7 @@ fun CollectionCard(
                     else -> Icons.Default.Delete
                 },
                 contentDescription = null,
-                modifier = Modifier.size(44.dp),
+                modifier = Modifier.size(48.dp),
                 tint = when (collection.wasteType) {
                     "General Waste" -> MaterialTheme.colorScheme.error
                     "Recyclables" -> MaterialTheme.colorScheme.primary
@@ -259,27 +283,32 @@ fun CollectionCard(
                 }
             )
             
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             
-            Column(modifier = Modifier.weight(1f)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = 4.dp)
+            ) {
                 Text(
                     text = collection.wasteType,
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = collection.date,
-                    fontSize = 14.sp,
+                    fontSize = 15.sp,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
                 if (collection.notes.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = collection.notes,
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                        lineHeight = 16.sp
+                        lineHeight = 18.sp
                     )
                 }
             }
@@ -289,14 +318,15 @@ fun CollectionCard(
                     imageVector = Icons.Default.CheckCircle,
                     contentDescription = "Completed",
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(32.dp)
                 )
             } else {
                 IconButton(onClick = { /* TODO: Edit collection */ }) {
                     Icon(
                         Icons.Default.Info,
                         contentDescription = "Edit",
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }

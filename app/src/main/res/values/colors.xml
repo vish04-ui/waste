@@ -4,8 +4,10 @@
     <color name="primary_green">#2E7D32</color>
     <color name="primary_dark_green">#1B5E20</color>
     <color name="primary_light_green">#4CAF50</color>
+    <color name="primary_green_light">#A5D6A7</color>
     
     <!-- Secondary Colors (30%) - Supporting colors -->
+    <color name="secondary_green">#388E3C</color>
     <color name="secondary_teal">#00695C</color>
     <color name="secondary_light_teal">#26A69A</color>
     <color name="secondary_dark_teal">#004D40</color>
@@ -14,6 +16,10 @@
     <color name="accent_yellow">#FFC107</color>
     <color name="accent_orange">#FF9800</color>
     <color name="accent_red">#F44336</color>
+    
+    <!-- Text Colors -->
+    <color name="dark_blue">#1B5E20</color>
+    <color name="hint_text_color">#81C784</color>
     
     <!-- Neutral Colors -->
     <color name="white">#FFFFFF</color>

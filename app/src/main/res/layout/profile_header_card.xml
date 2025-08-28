@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="?attr/colorPrimaryContainer"
+    android:padding="40dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="6dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:backgroundTint="?attr/colorPrimary"
+            app:cardCornerRadius="70dp"
+            app:cardElevation="4dp"
+            android:layout_marginTop="30dp">
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_person"
+                app:tint="?attr/colorOnPrimary"
+                />
+        </com.google.android.material.card.MaterialCardView>
+        <Space android:layout_width="0dp" android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:padding="4dp"
+            android:textColor="?attr/colorOnPrimaryContainer" />
+        <TextView
+            android:id="@+id/textEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp"
+            android:padding="4dp"
+            android:textColor="?attr/colorOnPrimaryContainer" />
+        <Space android:layout_width="0dp" android:layout_height="40dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="3">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal" android:padding="8dp">
+                <TextView android:id="@+id/textStat1Value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textSize="24sp" android:textColor="?attr/colorPrimary" android:padding="4dp" />
+                <TextView android:id="@+id/textStat1Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15sp" android:textColor="?attr/colorOnPrimaryContainer" android:padding="2dp" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal" android:padding="8dp">
+                <TextView android:id="@+id/textStat2Value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textSize="24sp" android:textColor="?attr/colorSecondary" android:padding="4dp" />
+                <TextView android:id="@+id/textStat2Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15sp" android:textColor="?attr/colorOnPrimaryContainer" android:padding="2dp" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center_horizontal" android:padding="8dp">
+                <TextView android:id="@+id/textStat3Value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textStyle="bold" android:textSize="24sp" android:textColor="?attr/colorTertiary" android:padding="4dp" />
+                <TextView android:id="@+id/textStat3Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15sp" android:textColor="?attr/colorOnPrimaryContainer" android:padding="2dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

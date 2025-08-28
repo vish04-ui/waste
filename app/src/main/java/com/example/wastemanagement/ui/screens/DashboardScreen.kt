@@ -229,6 +229,61 @@ fun DashboardScreen(navController: NavController, themeManager: ThemeManager, la
     }
 }
 
+// Simplified version for fragment host (no Nav navigation inside grid; switching handled by Activity)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DashboardScreenStub(themeManager: ThemeManager, languageManager: LanguageManager) {
+    var showLanguageSelector by remember { mutableStateOf(false) }
+    val currentLanguage by languageManager.currentLanguage.collectAsState(initial = AppLanguage.ENGLISH)
+    Scaffold(topBar = {
+        TopAppBar(title = {
+            Image(painter = painterResource(id = R.drawable.ecogrid_wordmark), contentDescription = null, modifier = Modifier.height(72.dp), contentScale = androidx.compose.ui.layout.ContentScale.Fit)
+        }, actions = {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedCard(onClick = { showLanguageSelector = true }, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)), modifier = Modifier.padding(4.dp)) {
+                    Row(modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Icon(imageVector = Icons.Default.Language, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
+                        Text(text = currentLanguage.code.uppercase(), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                    }
+                }
+                val isDarkMode by themeManager.isDarkMode.collectAsState(initial = false)
+                IconButton(onClick = { kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main).launch { themeManager.toggleTheme() } }) {
+                    Icon(imageVector = if (isDarkMode) Icons.Default.LightMode else Icons.Default.DarkMode, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer)
+                }
+            }
+            if (showLanguageSelector) {
+                LanguageSelector(languageManager = languageManager, onDismiss = { showLanguageSelector = false })
+            }
+        }, colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer))
+    }) { padding ->
+        Column(modifier = Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            ElevatedCard(modifier = Modifier.fillMaxWidth(), colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
+                Box(modifier = Modifier.fillMaxWidth().padding(24.dp), contentAlignment = Alignment.Center) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(imageVector = Icons.Rounded.Eco, contentDescription = null, modifier = Modifier.size(56.dp), tint = MaterialTheme.colorScheme.primary)
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(text = languageManager.getLocalizedStringForLanguage(currentLanguage, "welcome_title"), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer, textAlign = TextAlign.Center)
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(text = languageManager.getLocalizedStringForLanguage(currentLanguage, "welcome_subtitle"), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f), textAlign = TextAlign.Center)
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                StatCard(icon = Icons.Default.CheckCircle, title = languageManager.getLocalizedStringForLanguage(currentLanguage, "collections"), value = "12", modifier = Modifier.weight(1f))
+                StatCard(icon = Icons.Default.Autorenew, title = languageManager.getLocalizedStringForLanguage(currentLanguage, "recycled"), value = "85%", modifier = Modifier.weight(1f))
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            LazyVerticalGrid(columns = GridCells.Fixed(2), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth().height(400.dp)) {
+                item { FeatureCard(icon = Icons.Default.CalendarMonth, title = languageManager.getLocalizedStringForLanguage(currentLanguage, "waste_collection"), description = languageManager.getLocalizedStringForLanguage(currentLanguage, "waste_collection_desc"), onClick = { /* handled by bottom nav */ }) }
+                item { FeatureCard(icon = Icons.Default.Autorenew, title = languageManager.getLocalizedStringForLanguage(currentLanguage, "recycling_guide"), description = languageManager.getLocalizedStringForLanguage(currentLanguage, "recycling_guide_desc"), onClick = { }) }
+                item { FeatureCard(icon = Icons.Default.Person, title = languageManager.getLocalizedStringForLanguage(currentLanguage, "profile"), description = languageManager.getLocalizedStringForLanguage(currentLanguage, "profile_desc"), onClick = { }) }
+                item { FeatureCard(icon = Icons.Default.History, title = languageManager.getLocalizedStringForLanguage(currentLanguage, "history"), description = languageManager.getLocalizedStringForLanguage(currentLanguage, "history_desc"), onClick = { }) }
+            }
+        }
+    }
+}
+
 @Composable
 fun StatCard(
     icon: ImageVector,

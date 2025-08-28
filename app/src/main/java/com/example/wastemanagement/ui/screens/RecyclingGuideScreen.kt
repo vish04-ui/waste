@@ -34,32 +34,7 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
     }
     
     Scaffold(
-        contentWindowInsets = WindowInsets.safeDrawing,
-        topBar = {
-            TopAppBar(
-                title = { 
-                    Text(
-                        stringResource(id = R.string.recycling_guide_title), 
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
-                    ) 
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ),
-                actions = {
-                    IconButton(onClick = { /* TODO: Search */ }) {
-                        Icon(Icons.Default.Info, contentDescription = "Search")
-                    }
-                }
-            )
-        }
+        contentWindowInsets = WindowInsets.safeDrawing
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -68,6 +43,17 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // Title Section
+            item {
+                Text(
+                    text = stringResource(id = R.string.recycling_guide_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
+            
             // Header with animation
             item {
                 AnimatedVisibility(
@@ -162,6 +148,72 @@ fun RecyclingGuideScreen(navController: NavController, languageManager: Language
                         initialOffsetX = { it }
                     ) + fadeIn(animationSpec = tween(1400 + (index * 100)))
                 ) {
+                    QuickTipCard(tip = tip)
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RecyclingGuideScreenStandalone(languageManager: LanguageManager) {
+    // Simplified: reuse original with a no-op back arrow (omit navController)
+    var expandedCategory by remember { mutableStateOf<String?>(null) }
+    var isVisible by remember { mutableStateOf(false) }
+    val currentLanguage by languageManager.currentLanguage.collectAsState(initial = com.example.wastemanagement.ui.localization.AppLanguage.ENGLISH)
+    LaunchedEffect(Unit) { isVisible = true }
+    Scaffold(contentWindowInsets = WindowInsets.safeDrawing, topBar = {
+        TopAppBar(
+            title = {
+                Text(
+                    stringResource(id = R.string.recycling_guide_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        )
+    }) { padding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            item {
+                AnimatedVisibility(visible = isVisible, enter = slideInVertically(animationSpec = tween(600, easing = FastOutSlowInEasing)) + fadeIn(animationSpec = tween(600))) {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                    ) {
+                        Column(modifier = Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                            Icon(imageVector = Icons.Default.Eco, contentDescription = null, modifier = Modifier.size(56.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(text = stringResource(id = R.string.recycling_header_title), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondaryContainer, textAlign = TextAlign.Center)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = stringResource(id = R.string.recycling_header_subtitle), fontSize = 16.sp, color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f), textAlign = TextAlign.Center)
+                        }
+                    }
+                }
+            }
+            itemsIndexed(getRecyclingCategories(languageManager, currentLanguage)) { index, category ->
+                AnimatedVisibility(visible = isVisible, enter = slideInHorizontally(animationSpec = tween(800 + (index * 150), easing = FastOutSlowInEasing), initialOffsetX = { -it }) + fadeIn(animationSpec = tween(800 + (index * 150)))) {
+                    RecyclingCategoryCard(category = category, isExpanded = expandedCategory == category.id, onToggle = { expandedCategory = if (expandedCategory == category.id) null else category.id }, languageManager = languageManager, currentLanguage = currentLanguage)
+                }
+            }
+            item {
+                AnimatedVisibility(visible = isVisible, enter = slideInVertically(animationSpec = tween(1200, easing = FastOutSlowInEasing), initialOffsetY = { it }) + fadeIn(animationSpec = tween(1200))) {
+                    Text(text = stringResource(id = R.string.quick_tips), fontSize = 22.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+                }
+            }
+            itemsIndexed(getQuickTips(languageManager, currentLanguage)) { index, tip ->
+                AnimatedVisibility(visible = isVisible, enter = slideInHorizontally(animationSpec = tween(1400 + (index * 100), easing = FastOutSlowInEasing), initialOffsetX = { it }) + fadeIn(animationSpec = tween(1400 + (index * 100)))) {
                     QuickTipCard(tip = tip)
                 }
             }

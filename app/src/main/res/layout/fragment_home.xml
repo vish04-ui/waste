@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        app:title=""
+        app:contentInsetStartWithNavigation="0dp"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <!-- Welcome Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/welcomeCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="24dp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="?attr/colorPrimaryContainer">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="32dp">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_eco"
+                        android:layout_marginBottom="4dp"
+                        app:tint="?attr/colorPrimary" />
+                    <TextView
+                        android:id="@+id/welcomeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:layout_marginTop="20dp"
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        android:text="Welcome to EcoGrid"/>
+                    <TextView
+                        android:id="@+id/welcomeSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        android:alpha="0.85"
+                        android:text="Manage your waste efficiently"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Stats Row -->
+            <LinearLayout
+                android:id="@+id/statsRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="32dp"/>
+
+            <!-- Feature Grid -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/featureGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

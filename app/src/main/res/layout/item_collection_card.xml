@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    app:cardElevation="6dp"
+    app:cardCornerRadius="18dp"
+    app:cardUseCompatPadding="true">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="24dp">
+        
+        <ImageView
+            android:id="@+id/iconType"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/ic_eco"
+            android:backgroundTint="?attr/colorPrimaryContainer"
+            android:padding="12dp" />
+            
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
+            
+            <TextView
+                android:id="@+id/textWasteType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_marginBottom="4dp" />
+                
+            <TextView
+                android:id="@+id/textDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold"
+                android:layout_marginBottom="2dp" />
+                
+            <TextView
+                android:id="@+id/textNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:alpha="0.8"
+                android:layout_marginTop="2dp" />
+                
+        </LinearLayout>
+        
+        <ImageView
+            android:id="@+id/iconEnd"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_info"
+            android:tint="?attr/colorPrimary"
+            android:padding="4dp" />
+            
+    </LinearLayout>
+    
+</com.google.android.material.card.MaterialCardView>
